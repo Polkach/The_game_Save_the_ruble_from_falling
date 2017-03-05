@@ -15,6 +15,7 @@ public class GameWindow extends JFrame{
     private static Image game_over;
     private static Image drop;
     private static float drop_left = 200;
+    private static float drop_left_zero = 200;
     private static float drop_top = -100;
     private static float drop_v = 200;
     private static int score = 0;
@@ -41,7 +42,8 @@ public class GameWindow extends JFrame{
                 if(is_drop){
                     drop_top = -100;
                     drop_left = (int) (Math.random() * (game_field.getWidth() - drop.getWidth(null)));
-                    drop_v = drop_v+20;
+                    drop_left_zero = drop_left;
+                    drop_v = drop_v+10;
                     score++;
                     if(score%10==0 | (11<=score%100 && 14>=score%100)){
                         game_window.setTitle("Вы спасли: " + score + " рублей");
@@ -66,6 +68,7 @@ public class GameWindow extends JFrame{
         last_frame_time = current_time;
 
         drop_top = drop_top + drop_v * delta_time;
+        drop_left = drop_left_zero + (float)((drop_v-200)/10.0) * (float)Math.sin(current_time*0.00000001);
         g.drawImage(background,25,25,null);
         g.drawImage(drop,(int)drop_left,(int)drop_top,null);
         if(drop_top>game_window.getHeight()) g.drawImage(game_over,230,70,null);
