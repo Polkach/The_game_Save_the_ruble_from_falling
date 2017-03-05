@@ -14,16 +14,19 @@ public class GameWindow extends JFrame{
     private  static  Image background;
     private static Image game_over;
     private static Image drop;
+    private static Image rep_buttom;
     private static float drop_left = 200;
     private static float drop_left_zero = 200;
     private static float drop_top = -100;
     private static float drop_v = 200;
     private static int score = 0;
+    public static boolean rep = false;
 
     public static void main(String[] args) throws IOException{
         background = ImageIO.read(GameWindow.class.getResourceAsStream("neft-mmvb3.jpg"));
         game_over = ImageIO.read(GameWindow.class.getResourceAsStream("Over.png"));
         drop = ImageIO.read(GameWindow.class.getResourceAsStream("rubl.png"));
+        rep_buttom = ImageIO.read(GameWindow.class.getResourceAsStream("repeat.png"));
         game_window = new GameWindow();
         game_window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         game_window.setLocation(200,100);
@@ -39,6 +42,14 @@ public class GameWindow extends JFrame{
                 float drop_rigth = drop_left + drop.getWidth(null);
                 float drop_bottom = drop_top + drop.getHeight(null);
                 boolean is_drop = x>=drop_left && x<=drop_rigth && y>=drop_top && y<= drop_bottom;
+                if(rep==true && x>=773 && y<=125){
+                    rep = false;
+                    score = 0;
+                    drop_left = 200;
+                    drop_top = -100;
+                    drop_v = 200;
+                    game_window.setTitle("Вы спасли: 0 рублей");
+                }
                 if(is_drop){
                     drop_top = -100;
                     drop_left = (int) (Math.random() * (game_field.getWidth() - drop.getWidth(null)));
@@ -71,7 +82,11 @@ public class GameWindow extends JFrame{
         drop_left = drop_left_zero + (float)((drop_v-200)/10.0) * (float)Math.sin(current_time*0.00000001);
         g.drawImage(background,25,25,null);
         g.drawImage(drop,(int)drop_left,(int)drop_top,null);
-        if(drop_top>game_window.getHeight()) g.drawImage(game_over,230,70,null);
+        if(drop_top>game_window.getHeight()){
+            g.drawImage(game_over,225,65,null);
+            g.drawImage(rep_buttom,770,0,null);
+            rep = true;
+        }
 
     }
 
