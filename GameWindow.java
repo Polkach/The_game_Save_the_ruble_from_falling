@@ -43,7 +43,16 @@ public class GameWindow extends JFrame{
                     drop_left = (int) (Math.random() * (game_field.getWidth() - drop.getWidth(null)));
                     drop_v = drop_v+20;
                     score++;
-                    game_window.setTitle("Вы спасли: " + score + " рублей");
+                    if(score%10==0 | (11<=score%100 && 14>=score%100)){
+                        game_window.setTitle("Вы спасли: " + score + " рублей");
+                    } else if(score%10==1){
+                        game_window.setTitle("Вы спасли: " + score + " рубль");
+                    } else if(2<=score%10 && 4>=score%10){
+                        game_window.setTitle("Вы спасли: " + score + " рубля");
+                    } else {
+                        game_window.setTitle("Вы спасли: " + score + " рублей");
+                    }
+
                 }
             }
         });
